@@ -59,4 +59,25 @@ class MicropostsController extends Controller
             ->with('Delete Failed');
     }
 
+    public function favorite(string $id)
+    {
+        $micropost = Micropost::findOrFail($id);
+
+        if (\Auth::user()->favorite($micropost->id)) {
+            return back()->with('success', 'Added to favorites.');
+        }
+
+        return back()->with('error', 'Failed to add to favorites.');
+    }
+
+    public function unfavorite(string $id)
+    {
+        $micropost = Micropost::findOrFail($id);
+
+        if (\Auth::user()->unfavorite($micropost->id)) {
+            return back()->with('success', 'Removed from favorites.');
+        }
+
+        return back()->with('error', 'Failed to remove from favorites.');
+    }
 }

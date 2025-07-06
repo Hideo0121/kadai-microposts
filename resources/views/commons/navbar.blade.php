@@ -12,7 +12,7 @@
                     @include('commons.link_items')
                 </ul>
                 <div class="dropdown dropdown-end">
-                    <button type="button" tabindex="0" class="btn btn-ghost normal-case font-normal lg:hidden">
+                    <button type="button" tabindex="0" class="btn btn-ghost normal-case font-normal">
                         @if (Auth::check())
                             {{ Auth::user()->name }}
                         @else
@@ -23,7 +23,19 @@
                         </svg>
                     </button>
                     <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-info">
-                        @include('commons.link_items')
+                        @if (Auth::check())
+                            <li><a href="{{ route('users.show', Auth::id()) }}">My Profile</a></li>
+                            <li><a href="{{ route('favorites.index') }}">Favorites</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </li>
+                        @else
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                        @endif
                     </ul>
                 </div>
             </form>

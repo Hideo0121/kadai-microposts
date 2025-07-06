@@ -28,6 +28,21 @@
                                     <button type="submit" class="btn btn-error btn-sm normal-case" 
                                         onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
                                 </form>
+                            @else
+                                @if (Auth::user()->is_favoriting($micropost->id))
+                                    {{-- お気に入り解除ボタンのフォーム --}}
+                                    <form method="POST" action="{{ route('favorites.destroy', $micropost->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-secondary btn-sm normal-case">UnFavorite</button>
+                                    </form>
+                                @else
+                                    {{-- お気に入り登録ボタンのフォーム --}}
+                                    <form method="POST" action="{{ route('favorites.store', $micropost->id) }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary btn-sm normal-case">Favorite</button>
+                                    </form>
+                                @endif
                             @endif
                         </div>
                     </div>

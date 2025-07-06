@@ -9,8 +9,10 @@
         <div class="sm:col-span-2 mt-4">
             {{-- タブ --}}  
             @include('users.navtabs')
-            {{-- 投稿フォーム --}}
-            @include('microposts.form')
+            @if (!Request::routeIs('favorites.index'))
+                {{-- 投稿フォーム --}}
+                @include('microposts.form')
+            @endif
             {{-- 投稿一覧 --}}
             @include('microposts.microposts')
         </div>
